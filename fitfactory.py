@@ -23,11 +23,11 @@ class FitFactory:
 	def buildCriteria(self, file):
 		SimApp = Dispatch("Simnra.App")
 		SimSpec = Dispatch("Simnra.Spectrum")
-		
+
 		a = SimApp.OpenAs(file, 2)
 		print a
 		experimental_spectrum = np.asarray(SimSpec.DataArray(1))
-		
+
 		x = np.linspace(1,len(experimental_spectrum),len(experimental_spectrum))
 		experimental_spectrum_segment = cs.spline_bayesian(x,experimental_spectrum)
 		min_val = np.argmin(experimental_spectrum[self.lowC:self.upC])
@@ -45,7 +45,7 @@ class FitFactory:
 		#print Int_Exp
 		#print Int_Sim
 		self.decision_coeff = Int_Exp / Int_Sim
-		
+
 		del SimApp, SimSpec
 		return self.surface_Mo, self.decision_coeff, self.channel_dip
 
@@ -53,17 +53,19 @@ class FitFactory:
 	def decideCase(self):
 		SimSpec = Dispatch("Simnra.Spectrum")
 		if (self.decision_coeff > 0.95) or (self.channel_dip > 570) or (self.channel_dip < 410) or (self.surface_Mo > 100) or ((self.channel_dip < 420) and (self.surface_Mo > 50)): # Y, it has been full sputtered
+
 			integratedExperimentalMoSpectrum = SimSpec.Integrate(1,self.minMo,self.maxMo)
 
 			m = 0.092
 			if integratedExperimentalMoSpectrum < self.decisionParameterIntegratedMo:
+				print("This is C_Mo_thin case")
 				SimTar.ReadTarget(filepath[0]+'/C_Mo_thin.xtarget')
 				c = 20
 				Mo_estimator = integratedExperimentalMoSpectrum * m - c
 
 				self.fit_type = "C_Mo_thin"
-				n = FitNode()
 			else:
+				print("This is C_Mo case")
 				SimTar.ReadTarget(filepath[0]+'/C_Mo.xtarget')
 				Mo_estimator = integratedExperimentalMoSpectrum * m
 
@@ -96,6 +98,7 @@ class FitFactory:
 			step.append(fit_success_caseA_2)
 
 		else:
+			print("This is C_Mo_C case")
 			self.fit_type = "C_Mo_C"
 			SimTar.ReadTarget(filepath[0]+'/C_Mo_C.xtarget')
 
@@ -151,6 +154,6 @@ class FitFactory:
 		if fit_success != True:
 			number_of_errors += 1
 			print "The fit of "+ file +" failed to converge. Fit Class " + self.fit_type
-			
+
 		del SimSpec
 		return self.self.fit_type

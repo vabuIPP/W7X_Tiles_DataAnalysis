@@ -13,13 +13,10 @@ def getFiles(path):
     ret = []
     for c in aux:
         if (".CAM" in c):
-            ret.append(path+"\\"+c)
+            ret.append(os.path.normpath(path+"\\"+c))
     return ret
 
-def doFitting(param):
-	print("I'm working")
-
-def fitSimFit(data):
+def fitSimFit(param):
 	SimFit.SetRegionMinChannel('SetRegionMinChannel')
 
 def fitSimFitFluence(file):
@@ -71,9 +68,8 @@ def main():
 		ffactory = FitFactory()
 		ffactory.buildCriteria(fitFluenceFile)
 		node = ffactory.decideCase()
-		for param in node.data:
-			fitSimFit(data)
-			SimApp.FitSpectrum()
+		for param in node.params:
+			fitSimFit(param)
 			#TODO implement each fit process
 
 if __name__ == '__main__':

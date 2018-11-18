@@ -2,6 +2,7 @@ class FitNode:
 
     def __init__(self):
         self.params = []
+        self.refFile = ""
 
     del createCommonParams():
         param = {}

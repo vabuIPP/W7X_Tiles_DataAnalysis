@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idf xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://idf.schemas.itn.pt" xmlns:simnra="http://www.simnra.com/simnra">
+	<users>
+		<user/>
+	</users>
+	<notes>
+	<note>file created by SIMNRA 7.01</note></notes>
+	<attributes>
+		<idfversion>1.01</idfversion>
+		<filename>C_Mo_thin.xtarget</filename>
+		<createtime>2018-08-24 17:49:44</createtime>
+		<simnra:simnraversionnr>7.01</simnra:simnraversionnr>
+		<simnra:filetype>xnra</simnra:filetype>
+		<simnra:xnraversionnr>1.1</simnra:xnraversionnr>
+	</attributes>
+	<sample>
+		<users>
+			<user/>
+		</users>
+		<notes>
+			<note/>
+		</notes>
+		<description/>
+		<elementsandmolecules>
+			<elements>
+				<nelements>2</nelements>
+			<element><name>C</name></element><element><name>Mo</name></element></elements>
+		</elementsandmolecules>
+		<structure>
+			<notes>
+				<note/>
+			</notes>
+			<layeredstructure>
+				<nlayers>2</nlayers>
+				<layers>
+				<layer><layerthickness units="1e15at/cm2"> 5.00000000000000E+0003</layerthickness><layerelements><layerelement><name>C</name><concentration units="fraction"> 9.70000000000000E-0001</concentration></layerelement><layerelement><name>Mo</name><concentration units="fraction"> 3.00000000000000E-0002</concentration></layerelement></layerelements><simnra:hasroughness>false</simnra:hasroughness><simnra:roughness><simnra:distribution>none</simnra:distribution><simnra:filename/><simnra:fileformat>ASCII</simnra:fileformat></simnra:roughness><simnra:porosity><simnra:hasporosity>false</simnra:hasporosity><simnra:volumefraction units="vol%"> 0.00000000000000E+0000</simnra:volumefraction><simnra:porediameter units="1e15at/cm2"> 0.00000000000000E+0000</simnra:porediameter></simnra:porosity></layer><layer><layerthickness units="1e15at/cm2"> 1.00000000000000E+0007</layerthickness><layerelements><layerelement><name>C</name><concentration units="fraction"> 1.00000000000000E+0000</concentration></layerelement></layerelements><simnra:hasroughness>false</simnra:hasroughness><simnra:roughness><simnra:distribution>none</simnra:distribution><simnra:filename/><simnra:fileformat>ASCII</simnra:fileformat></simnra:roughness><simnra:porosity><simnra:hasporosity>false</simnra:hasporosity><simnra:volumefraction units="vol%"> 0.00000000000000E+0000</simnra:volumefraction><simnra:porediameter units="1e15at/cm2"> 0.00000000000000E+0000</simnra:porediameter></simnra:porosity></layer></layers>
+				<simnra:substraterougness>
+					<simnra:distribution>none</simnra:distribution>
+					<simnra:width units="degree" mode="FWHM"> 0.00000000000000E+0000</simnra:width>
+				</simnra:substraterougness>
+			</layeredstructure>
+		</structure>
+		<spectra>
+			<spectrum>
+				<notes>
+					<note/>
+				</notes>
+				<log>
+			 		
+			 		
+					
+					
+				</log>
+				<beam>
+					<beamparticle>0XX</beamparticle>
+					<beamZ>-1</beamZ>
+					<beammass units="amu"> 0.00000000000000E+0000</beammass>
+					<beamenergy units="keV"> 0.00000000000000E+0000</beamenergy>
+					<beamenergyspread mode="FWHM" units="keV"> 0.00000000000000E+0000</beamenergyspread>
+					<beamfluence units="#particles"> 0.00000000000000E+0000</beamfluence>
+					<beamangularspread units="degree" mode="FWHM">0</beamangularspread>
+					
+					<simnra:beamenergyspreadlow mode="FWHM" units="keV"> 0.00000000000000E+0000</simnra:beamenergyspreadlow>
+					<simnra:beamenergyspreadhigh mode="FWHM" units="keV"> 0.00000000000000E+0000</simnra:beamenergyspreadhigh>
+				</beam>
+				<geometry>
+					<geometrytype>IBM</geometrytype>
+					<incidenceangle units="degree"> 0.00000000000000E+0000</incidenceangle>
+					<scatteringangle units="degree"> 1.80000000000000E+0002</scatteringangle>
+					<exitangle units="degree"> 0.00000000000000E+0000</exitangle>
+					<spot>
+						<shape>rectangular</shape>
+						<l1 units="mm"> 0.00000000000000E+0000</l1>
+						<l2 units="mm"> 0.00000000000000E+0000</l2>
+					</spot>
+				</geometry>
+				<detection>
+					
+					<detector>
+						<detectortype>SSB</detectortype>
+						<solidangle units="msr"> 1.00000000000000E+0000</solidangle>
+						<detectorshape>
+							<shape>rectangular</shape>
+							<l1 units="mm"> 0.00000000000000E+0000</l1>
+							<l2 units="mm"> 0.00000000000000E+0000</l2>
+						</detectorshape>
+						
+						
+						<distancedetectortosample units="mm"> 0.00000000000000E+0000</distancedetectortosample>
+						
+					</detector>
+					<electronics>
+						<amplifier>
+							<pulseshape>Gaussian</pulseshape>
+							<shapingtime units="us"> 0.00000000000000E+0000</shapingtime>
+							<pur>off</pur>
+							<purtime units="us"> 4.00000000000000E-0001</purtime>
+						</amplifier>
+					</electronics>
+				</detection>
+				<calibrations>
+					
+					<detectorresolutions>
+					<detectorresolution><resolutionparameters><resolutionparameter units="keV" mode="FWHM"> 1.50000000000000E+0001</resolutionparameter></resolutionparameters></detectorresolution></detectorresolutions>
+					<energycalibrations>
+					<energycalibration><calibrationmode>energy</calibrationmode><calibrationparameters><calibrationparameter units="keV"> 0.00000000000000E+0000</calibrationparameter><calibrationparameter units="keV/channel"> 1.00000000000000E+0000</calibrationparameter><calibrationparameter units="keV/channel^2"> 0.00000000000000E+0000</calibrationparameter></calibrationparameters></energycalibration></energycalibrations>
+				</calibrations>
+				<reactions>
+					<technique>RBS</technique>
+				</reactions>
+				<data>
+					<datamode>simple</datamode>
+					<channelmode>left</channelmode>
+					<simpledata>
+						<xaxis>
+							<axisname>channel</axisname>
+							<axisunit>#</axisunit>
+						</xaxis>
+						<yaxis>
+							<axisname>yield</axisname>
+							<axisunit>counts</axisunit>
+						</yaxis>
+						<x>0</x>
+						<y> 0.00000000000000E+0000</y>
+					</simpledata>
+					<simnra:graphics>
+						<simnra:legend/>	
+						<simnra:linecolor>red</simnra:linecolor>
+						<simnra:active>true</simnra:active>
+						<simnra:symbol>
+							<simnra:shape>circle</simnra:shape>
+							<simnra:visible>false</simnra:visible>
+						</simnra:symbol>
+					</simnra:graphics>
+				</data>
+				<simnra:processeddata>
+					<simnra:smootheddata>
+						<simnra:smoothingmethod/>
+						<simnra:smoothingwindow units="channels">0</simnra:smoothingwindow>
+						<datamode>simple</datamode>
+						<channelmode>left</channelmode>
+						<simpledata>
+							<xaxis>
+								<axisname>channel</axisname>
+								<axisunit>#</axisunit>
+							</xaxis>
+							<yaxis>
+								<axisname>yield</axisname>
+								<axisunit>counts</axisunit>
+							</yaxis>
+							<x>0</x>
+							<y> 0.00000000000000E+0000</y>
+						</simpledata>
+						<simnra:graphics>
+							<simnra:legend/>	
+							<simnra:linecolor>red</simnra:linecolor>
+							<simnra:active>true</simnra:active>
+							<simnra:symbol>
+								<simnra:shape>circle</simnra:shape>
+								<simnra:visible>false</simnra:visible>
+							</simnra:symbol>
+						</simnra:graphics>
+					</simnra:smootheddata>
+				</simnra:processeddata>
+				<process>
+					<physicsdefaults>
+						<crosssectiondefault>
+							<Rutherford>false</Rutherford>
+							<screening>none</screening>
+							<simnra:isotopes>false</simnra:isotopes>
+						</crosssectiondefault>
+						<stoppingpowerdefault>
+							<computercode>
+								<name>SIMNRA AZ</name>
+								<version>7.01</version>
+							</computercode>
+							<simnra:nuclearstopping>none</simnra:nuclearstopping>
+							<simnra:highenergystopping>false</simnra:highenergystopping>
+						</stoppingpowerdefault>
+						<energyspreaddefault>
+							<energylossstraggling>none</energylossstraggling>
+							<multiplescattering>false</multiplescattering>
+							<Dopplereffect>false</Dopplereffect>
+							<beamangularspread>false</beamangularspread>
+							<geometricspread>
+								<beamsize>false</beamsize>
+								<detectoraperture>false</detectoraperture>
+							</geometricspread>
+							<Tschalareffect>true</Tschalareffect>
+							<simnra:energyspreadshape>Gaussian</simnra:energyspreadshape>
+							<simnra:energyspreadcrosssection>unknown</simnra:energyspreadcrosssection>
+							<simnra:accuracies>
+								<simnra:accuracystraggling> 0.00000000000000E+0000</simnra:accuracystraggling>
+							</simnra:accuracies>
+						</energyspreaddefault>
+						<simnra:livetimecalculationdefault>
+							<simnra:livetime>false</simnra:livetime>
+						</simnra:livetimecalculationdefault>
+						<simnra:pileupcalculationdefault>
+							<simnra:pileup>false</simnra:pileup>
+							<simnra:pileupmodel>accurate</simnra:pileupmodel>
+							<simnra:fastmodeltime units="s"> 4.00000000000000E-0007</simnra:fastmodeltime>
+							<simnra:pileupiterations>0</simnra:pileupiterations>
+						</simnra:pileupcalculationdefault>
+						<simnra:dualscatteringdefault>
+							<simnra:dualscattering>false</simnra:dualscattering>
+							<simnra:psiintervals>10</simnra:psiintervals>
+							<simnra:phiintervals>12</simnra:phiintervals>
+							<simnra:cutofflength> 1.50000000000000E+0000</simnra:cutofflength>
+							<simnra:cutoffminangle units="degree"> 1.00000000000000E-0002</simnra:cutoffminangle>
+							<simnra:cutoffmaxangle units="degree"> 1.99999994181858E+0001</simnra:cutoffmaxangle>
+							<simnra:fastroughness>accurate</simnra:fastroughness>
+						</simnra:dualscatteringdefault>
+						<simnra:energylosscalculationdefault>
+							<simnra:autoenergystepin>false</simnra:autoenergystepin>
+							<simnra:autoenergystepout>false</simnra:autoenergystepout>
+							<simnra:energystepin units="keV"> 0.00000000000000E+0000</simnra:energystepin>
+							<simnra:energystepout units="keV"> 0.00000000000000E+0000</simnra:energystepout>
+							<simnra:energymin units="keV"> 0.00000000000000E+0000</simnra:energymin>
+							<simnra:accuracies>
+								<simnra:accuracyRK units="keV"> 0.00000000000000E+0000</simnra:accuracyRK>
+							</simnra:accuracies>
+						</simnra:energylosscalculationdefault>
+						<simnra:roughnesscalculationdefault>
+							<simnra:thicknessvariations>0</simnra:thicknessvariations>
+							<simnra:angularvariations>0</simnra:angularvariations>
+							<simnra:substratedimension>2.0</simnra:substratedimension>
+						</simnra:roughnesscalculationdefault>
+						<simnra:accuracydefault>
+							<simnra:calculationaccuracy>accurate</simnra:calculationaccuracy>
+						</simnra:accuracydefault>
+					</physicsdefaults>
+					<simulations><simulation><physics><crosssections/></physics><simulationtype>total</simulationtype><datamode>simple</datamode><channelmode>left</channelmode><simpledata><xaxis><axisname>channel</axisname><axisunit>#</axisunit></xaxis><yaxis><axisname>yield</axisname><axisunit>counts</axisunit></yaxis><x>0</x><y> 0.00000000000000E+0000</y></simpledata><simnra:graphics><simnra:legend/><simnra:linecolor>red</simnra:linecolor><simnra:active>true</simnra:active><simnra:symbol><simnra:shape>circle</simnra:shape><simnra:visible>false</simnra:visible></simnra:symbol></simnra:graphics></simulation><simulation><physics><crosssections/></physics><simulationtype>pileup</simulationtype><datamode>simple</datamode><channelmode>left</channelmode><simpledata><xaxis><axisname>channel</axisname><axisunit>#</axisunit></xaxis><yaxis><axisname>yield</axisname><axisunit>counts</axisunit></yaxis><x>0</x><y> 0.00000000000000E+0000</y></simpledata><simnra:graphics><simnra:legend/><simnra:linecolor>red</simnra:linecolor><simnra:active>true</simnra:active><simnra:symbol><simnra:shape>circle</simnra:shape><simnra:visible>false</simnra:visible></simnra:symbol></simnra:graphics></simulation></simulations>
+				</process>
+				<simnra:scaling>
+					<simnra:auto>false</simnra:auto>
+					<simnra:xaxis>
+						<simnra:min> 0.00000000000000E+0000</simnra:min>
+						<simnra:max> 1.00000000000000E+0003</simnra:max>
+						<simnra:logarithmic>false</simnra:logarithmic>
+					</simnra:xaxis>
+					<simnra:yaxis>
+						<simnra:min> 0.00000000000000E+0000</simnra:min>
+						<simnra:max> 1.00000000000000E+0003</simnra:max>
+						<simnra:logarithmic>false</simnra:logarithmic>
+					</simnra:yaxis>
+				</simnra:scaling>
+				<simnra:subspectra>
+					<simnra:elementspectra>false</simnra:elementspectra>
+					<simnra:isotopespectra>false</simnra:isotopespectra>
+				</simnra:subspectra>
+				<simnra:legendoutsideofchart>false</simnra:legendoutsideofchart>
+			</spectrum>
+		</spectra>
+	</sample>
+</idf>

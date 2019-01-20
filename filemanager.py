@@ -6,13 +6,13 @@ def getFiles(mypath):
     for f in listdir(mypath):
         current = join(mypath, f)
         if isdir(current):
-            ret = ret + getFiles2(current)
+            ret = ret + getFiles(current)
         elif isfile(current) and ".CAM" in current:
             ret.append(current)
     return ret
 
 def main():
-    files =  getFiles2("Data")
+    files =  getFiles("Data")
     for a in files:
         f = open(a, "r")
         print(f.read())

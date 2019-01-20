@@ -7,6 +7,7 @@ import numpy as np
 from win32com.client import Dispatch
 import scipy.optimize as sciopt
 import scipy.stats as scistat
+import filemanager as fm
 
 def getFiles(path):
     aux = os.listdir(path)
@@ -59,8 +60,8 @@ def camToXnra(file, template):
 	return newFile
 
 def main():
-	files = [os.path.normpath('C:\Users\\vabu\Documents\GitHub\W7X_Tiles_DataAnalysis\Data\\2018-05-09.vabu\\BOM_165\\107#004.CAM')]
-	#files = getFiles('C:\Users\\vabu\Documents\GitHub\W7X_Tiles_DataAnalysis\')
+	#files = [os.path.normpath('C:\Users\\vabu\Documents\GitHub\W7X_Tiles_DataAnalysis\Data\\2018-05-09.vabu\\BOM_165\\107#004.CAM')]
+	files = fm.getFiles('C:\Users\\vabu\Documents\GitHub\W7X_Tiles_DataAnalysis\')
 	template = os.path.normpath('C:\Users\\vabu\Documents\GitHub\W7X_Tiles_DataAnalysis\\template.xnra')
 	for f in files:
 		xnraFile = camToXnra(f, template)

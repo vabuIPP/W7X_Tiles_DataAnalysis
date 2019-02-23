@@ -49,7 +49,7 @@ def fitSimFitFluence(file):
 
 def camToXnra(file, template):
 	SimApp = Dispatch("Simnra.App") #opening OLE object
-	print file
+	#print file
 	SimApp.Open(template, FileType = 2)
 	SimApp.ReadSpectrumData(file,2)
 	output_loc = str(os.path.normpath(file.replace('.CAM','')))
@@ -61,15 +61,18 @@ def camToXnra(file, template):
 
 def main():
 	#files = [os.path.normpath('C:\Users\\vabu\Documents\GitHub\W7X_Tiles_DataAnalysis\Data\\2018-05-09.vabu\\BOM_165\\107#004.CAM')]
-	files = fm.getFiles('C:\Users\\vabu\Documents\GitHub\W7X_Tiles_DataAnalysis\')
-	template = os.path.normpath('C:\Users\\vabu\Documents\GitHub\W7X_Tiles_DataAnalysis\\template.xnra')
+	files = fm.getFiles('\\\\AFS\\ipp\\home\\m\\mguitart\\HIWI\\fittings\\auto_test')
+	template = os.path.normpath("C:\\Users\\mguitart\\Documents\\GitHub\\W7X_Tiles_DataAnalysis\\template.xnra")
 	for f in files:
 		xnraFile = camToXnra(f, template)
-		fitFluenceFile = fitSimFitFluence(xnraFile)
-		ffactory = FitFactory()
-		ffactory.buildCriteria(fitFluenceFile)
-		node = ffactory.decideCase()
-		for param in node.params:
+        fitFluenceFile = fitSimFitFluence(xnraFile)
+        print "Break point"
+        print fitFluenceFile
+        ffactory = FitFactory()
+        ffactory.buildCriteria(fitFluenceFile)
+        node = ffactory.decideCase(f)
+        print node
+        for param in node.params:
 			fitSimFit(param)
 			#TODO implement each fit process
 

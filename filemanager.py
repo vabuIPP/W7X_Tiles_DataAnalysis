@@ -1,5 +1,6 @@
 from os.path import isfile, join, isdir
 from os import listdir
+import os
 
 def getFiles(mypath):
     ret = []
@@ -8,7 +9,7 @@ def getFiles(mypath):
         if isdir(current):
             ret = ret + getFiles(current)
         elif isfile(current) and ".CAM" in current:
-            ret.append(current)
+            ret.append(os.path.normpath(current))
     return ret
 
 def main():

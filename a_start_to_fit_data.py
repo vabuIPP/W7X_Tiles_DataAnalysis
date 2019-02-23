@@ -24,11 +24,11 @@ def applyFit(app, fit, cspect, params):
 	fit.ParticlesSr = params["particles"]
 	fit.LayerThickness = params["thickness"]
 	fit.LayerRoughness = params["roughness"]
-	
+
 	fit.LayerNr = params["layer"]
-	
+
 	fit.NumberOfRegions = params["number_regions"]
-	
+
 	for i in range(len(params["regions_values"])):
 		reg = params["regions_values"][i]
 		#print reg
@@ -37,7 +37,7 @@ def applyFit(app, fit, cspect, params):
 
 	a = app.FitSpectrum()
 	print a
-	
+
 def buildCriteria(app, spectrum, file, lowC, upC):
 	print file
 	a = app.OpenAs(file, 2)
@@ -60,7 +60,7 @@ def buildCriteria(app, spectrum, file, lowC, upC):
 	decision_coeff = Int_Exp / Int_Sim
 
 	return surface_Mo, decision_coeff, channel_dip
-	
+
 def MoEstimator(spec, minMo,maxMo):
 	integratedExperimentalMoSpectrum = spec.Integrate(1,minMo,maxMo)
 	print integratedExperimentalMoSpectrum
@@ -68,11 +68,8 @@ def MoEstimator(spec, minMo,maxMo):
 	c = 20
 	Mo_estimator = integratedExperimentalMoSpectrum * m - c
 	return Mo_estimator
-	
-def main():
-	print "Parameters:"
-	print "First parameter is the file where the fit is defined"
-	print "Second parameter is the spectra folder, or spectrum file depending on what you have commented into the code"
+
+def doFit(fit_file, spec_data):
 	app = SimNRA.App() # The SimNRA app instance
 	target = SimNRA.Target() # The SimNRA target instance
 	spectrum = SimNRA.Spectrum() # The current SimNRA calculated/experimental spectrum
@@ -80,9 +77,6 @@ def main():
 	fit = SimNRA.Fit()
 	app.Show()
 
-	fit_file = str(raw_input("Enter the fit file .xnra"))
-	spec_data = str(raw_input("Enter the spectrum data .CAM"))
-	
 	# Load template
 	app.Open(fit_file, FileType = 2) # File format 2 is format .xnra
 
@@ -90,11 +84,9 @@ def main():
 	# to a single .CAM file, use getSpectrum file. To change it, just comment one function and use the other.
 	#spects = getSpectra(spec_data)
 	spects = getSpectrumFile(spec_data)
-	
+
 	for spec in spects:
-
 		#print spec
-
 		#print "Write the minimum value of the region and the maximum for the fit particles. In this case, the width of the first Carbon layer."
 		#min = int(raw_input("Enter the minimum"))
 		min= 200
@@ -110,8 +102,8 @@ def main():
 		#min2 = int(raw_input("Enter the minimum of second region"))
 		#max2 = int(raw_input("Enter the maximum of second region"))
 		applyFit(app, fit, spec, { "particles": False, "thickness": True, "roughness": False, "layer": 1, "number_regions": 1, "regions_values": [{"min": min1, "max":max1}]})
-		
-		
+
+
 		Mo_estimator = MoEstimator(spectrum, 620, 780)
 		caca = target.SetElementAmount(1, 2, Mo_estimator)
 		print caca
@@ -127,7 +119,7 @@ def main():
 		min2 = int(raw_input("Enter the minimum of second region"))
 		max2 = int(raw_input("Enter the maximum of second region"))
 		applyFit(app, fit, spec, { "particles": False, "thickness": True, "roughness": True, "layer": 1, "number_regions": 2, "regions_values": [{"min": min1, "max":max1},{"min": min2, "max": max2}]})
-		
+
 		print "Layer Roughness of Molibdenium. Min and max value for left and right hand side of peak"
 		min1 = int(raw_input("Enter the minimum of first region"))
 		max1 = int(raw_input("Enter the maximum of first region"))
@@ -142,9 +134,19 @@ def main():
 		#applyFit(app, fit, spec, { "particles": False, "thickness": False, "roughness": True, "layer": 1, "number_regions": 2, "regions_values": []})
 		#applyFit(app, fit, spec, { "particles": False, "thickness": True, "roughness": True, "layer": 1, "number_regions": 2, "regions_values": []})
 		'''
-		app.SaveAs(spec[0:-4]+".xnra") # spec is a string, i.e. array of chars, and tells it to save it with the same name form position 0 to position n-1 (so it removes the xnra)
+		app.SaveAs(spec[0:-4]+"_auto.xnra") # spec is a string, i.e. array of chars, and tells it to save it with the same name form position 0 to position n-1 (so it removes the xnra)
+
+def main():
+	print "Parameters:"
+	print "First parameter is the file where the fit is defined"
+	print "Second parameter is the spectra folder, or spectrum file depending on what you have commented into the code"
+
+
+	fit_file = str(raw_input("Enter the fit file .xnra"))
+	spec_data = str(raw_input("Enter the spectrum data .CAM"))
+	doFit(fit_file, spec_data)
+
 
 if __name__== "__main__": #sentence to apply the code. Mo more relevance
 
   main()
-

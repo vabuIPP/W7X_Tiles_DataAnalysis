@@ -1,3 +1,4 @@
 *.pyc
 Data
 test.py
+*.dat

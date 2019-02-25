@@ -2,12 +2,14 @@ from os.path import isfile, join, isdir
 from os import listdir
 import os
 import sys
+import numpy as np
+from scipy.signal import argrelextrema
 
 def getFiles(mypath):
     ret = []
     for f in listdir(mypath):
         current = join(mypath, f)
-        if isdir(current):
+        if isdir(current) and "done" not in current:
             ret = ret + getFiles(current)
         elif isfile(current) and ".CAM" in current:
             ret.append(os.path.normpath(current))
@@ -53,12 +55,25 @@ def getGradients(arr):
     #sys.exit()
     return ret
 
-def main():
-    files =  getFiles("Data")
-    for a in files:
-        f = open(a, "r")
-        print(f.read())
+def getNPGradient(arr):
+    a = np.array(arr)
+    # determine the indices of the local maxima
+    maxInd = argrelextrema(a, np.greater)
+    r = a[maxInd]
+    print r
 
+def checkFile(file):
+    return os.path.isfile(file)
+
+def main():
+    #files =  getFiles("Data")
+    #for a in files:
+    #    f = open(a, "r")
+    #    print(f.read())
+    checkFile("template.xnra")
+    files = getFiles("\\\\AFS\\ipp\\home\\m\\mguitart\\HIWI\\fittings\\")
+    for f in files:
+        print f
 
 if __name__ == '__main__':
     main()

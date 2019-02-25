@@ -57,7 +57,7 @@ def buildCriteria(app, spectrum, file, lowC, upC):
 	a = app.OpenAs(file, 2)
 	print a
 	experimental_spectrum = np.asarray(spectrum.DataArray(1))
-	grads = fm.getGradients(experimental_spectrum)
+	#grads = fm.getNPGradients(experimental_spectrum)
 	x = np.linspace(1,len(experimental_spectrum),len(experimental_spectrum))
 	experimental_spectrum_segment = cs.spline_bayesian(x,experimental_spectrum)
 	min_val = np.argmin(experimental_spectrum[lowC:upC])
@@ -74,7 +74,7 @@ def buildCriteria(app, spectrum, file, lowC, upC):
 	#print Int_Sim
 	decision_coeff = Int_Exp / Int_Sim
 
-	return surface_Mo, decision_coeff, channel_dip, grads
+	return surface_Mo, decision_coeff, channel_dip
 
 def MoEstimator(spec, minMo,maxMo):
 	integratedExperimentalMoSpectrum = spec.Integrate(1,minMo,maxMo)
@@ -83,6 +83,10 @@ def MoEstimator(spec, minMo,maxMo):
 	c = 20
 	Mo_estimator = integratedExperimentalMoSpectrum * m - c
 	return Mo_estimator
+
+def buildTest(path):
+	arr = path.split("\\")[0:-1]
+	return '\\'.join([str(x) for x in arr])+"\\test.xnra"
 
 def doFit(template, spec_data):
 	app = Dispatch("Simnra.App") # The SimNRA app instance
@@ -101,7 +105,11 @@ def doFit(template, spec_data):
 
 	for spec in spects:
 		print spec
-		fit_file = camToXnra(spec, template)
+		if fm.checkFile(buildTest(spec)):
+			ctemplate = buildTest(spec)
+		else:
+			ctemplate = template
+		fit_file = camToXnra(spec, ctemplate)
 		# Load template
 		r = app.Open(fit_file, FileType = 2) # File format 2 is format .xnra
 		#print spec
@@ -114,13 +122,12 @@ def doFit(template, spec_data):
 		applyFit(app, fit, spec, { "particles": True, "thickness": False, "roughness": False, "layer": 1, "number_regions": 1, "regions_values": [{"min": min, "max":max}]})
 
 		minimum = buildCriteria(app, spectrum, fit_file, 400, 600)
-		print "Grads"
-		print minimum[3]
+
 		#print "Layer Thickness of Carbon layer. Min and max value for the first carbon layer and min and max also for the tungsten platform"
 		min1 = minimum[2] #int(raw_input("Enter the minimum of first region"))
 		max1 = min1+45 #nt(raw_input("Enter the maximum of first region"))
 
-		applyFit(app, fit, spec, { "particles": False, "thickness": True, "roughness": False, "layer": 1, "number_regions": 1, "regions_values": [{"min": min1, "max":max1}]})
+		applyFit(app, fit, spec, { "particles": True, "thickness": False, "roughness": False, "layer": 1, "number_regions": 1, "regions_values": [{"min": min1, "max":max1}]})
 		#print minimum
 		#print "Layer Thickness of Carbon layer. Min and max value for the first carbon layer and min and max also for the tungsten platform"
 		min1 = minimum[2] #int(raw_input("Enter the minimum of first region"))
@@ -171,7 +178,7 @@ def main():
 	fit_file = "C:\\Users\\mguitart\\Documents\\GitHub\\W7X_Tiles_DataAnalysis\\template1.xnra"
 	#fit_file = "\\\\AFS\\ipp\\home\\m\\mguitart\\HIWI\\fittings\\auto_test\\template.xnra"
 	#spec_data = str(raw_input("Enter the spectrum data .CAM"))
-	spec_data =  os.path.normpath('\\\\AFS\\ipp\\home\\m\\mguitart\\HIWI\\fittings\\single_test\\')
+	spec_data =  os.path.normpath('\\\\AFS\\ipp\\home\\m\\mguitart\\HIWI\\fittings\\')
 	doFit(fit_file, spec_data)
 
 

@@ -1,7 +1,7 @@
-import a_start_to_fit_data as fit
+import a_start_to_fit_data_auto as fit
 
 def main():
-    files = fm.getFiles('\\AFS\ipp\home\m\mguitart\HIWI\fittings\11-30-2017')
-    template = os.path.normpath('template.xnra')
-    for f in files:
-        fit.doFit(template, f)
+    print fit.buildTest('\\\\AFS\\ipp\\home\\m\\mguitart\\HIWI\\fittings\\auto_test\\A501#004.CAM')
+
+if __name__ == '__main__':
+    main()

@@ -35,16 +35,29 @@ def applyFit(app, fit, cspect, params):
 		#print reg
 		fit.SetRegionMaxChannel(i+1, reg["max"])
 		fit.SetRegionMinChannel(i+1, reg["min"])
-		
+
 	print app.FileName
 	a = app.FitSpectrum()
 	print a
+
+def camToXnra(file, template):
+	SimApp = Dispatch("Simnra.App") #opening OLE object
+	#print file
+	SimApp.Open(template, FileType = 2)
+	SimApp.ReadSpectrumData(file,2)
+	output_loc = str(os.path.normpath(file.replace('.CAM','')))
+	newFile = output_loc + '_template.xnra'
+	SimApp.SaveAs(newFile)
+
+	del SimApp
+	return newFile
 
 def buildCriteria(app, spectrum, file, lowC, upC):
 	print file
 	a = app.OpenAs(file, 2)
 	print a
 	experimental_spectrum = np.asarray(spectrum.DataArray(1))
+	grads = fm.getGradients(experimental_spectrum)
 	x = np.linspace(1,len(experimental_spectrum),len(experimental_spectrum))
 	experimental_spectrum_segment = cs.spline_bayesian(x,experimental_spectrum)
 	min_val = np.argmin(experimental_spectrum[lowC:upC])
@@ -61,7 +74,7 @@ def buildCriteria(app, spectrum, file, lowC, upC):
 	#print Int_Sim
 	decision_coeff = Int_Exp / Int_Sim
 
-	return surface_Mo, decision_coeff, channel_dip
+	return surface_Mo, decision_coeff, channel_dip, grads
 
 def MoEstimator(spec, minMo,maxMo):
 	integratedExperimentalMoSpectrum = spec.Integrate(1,minMo,maxMo)
@@ -71,7 +84,7 @@ def MoEstimator(spec, minMo,maxMo):
 	Mo_estimator = integratedExperimentalMoSpectrum * m - c
 	return Mo_estimator
 
-def doFit(fit_file, spec_data):
+def doFit(template, spec_data):
 	app = Dispatch("Simnra.App") # The SimNRA app instance
 	target = Dispatch("Simnra.Target") # The SimNRA target instance
 	spectrum = Dispatch("Simnra.Spectrum") # The current SimNRA calculated/experimental spectrum
@@ -79,8 +92,7 @@ def doFit(fit_file, spec_data):
 	fit = Dispatch("Simnra.Fit")
 	app.Show()
 
-	# Load template
-	r = app.Open(fit_file, FileType = 2) # File format 2 is format .xnra
+
 
 	# If you want to apply the fit to a set .CAM into a folder, use getSpectra functions. In the other hand, if you only want to apply
 	# to a single .CAM file, use getSpectrum file. To change it, just comment one function and use the other.
@@ -89,6 +101,9 @@ def doFit(fit_file, spec_data):
 
 	for spec in spects:
 		print spec
+		fit_file = camToXnra(spec, template)
+		# Load template
+		r = app.Open(fit_file, FileType = 2) # File format 2 is format .xnra
 		#print spec
 		#print "Write the minimum value of the region and the maximum for the fit particles. In this case, the width of the first Carbon layer."
 		#min = int(raw_input("Enter the minimum"))
@@ -99,11 +114,18 @@ def doFit(fit_file, spec_data):
 		applyFit(app, fit, spec, { "particles": True, "thickness": False, "roughness": False, "layer": 1, "number_regions": 1, "regions_values": [{"min": min, "max":max}]})
 
 		minimum = buildCriteria(app, spectrum, fit_file, 400, 600)
+		print "Grads"
+		print minimum[3]
+		#print "Layer Thickness of Carbon layer. Min and max value for the first carbon layer and min and max also for the tungsten platform"
+		min1 = minimum[2] #int(raw_input("Enter the minimum of first region"))
+		max1 = min1+45 #nt(raw_input("Enter the maximum of first region"))
 
+		applyFit(app, fit, spec, { "particles": False, "thickness": True, "roughness": False, "layer": 1, "number_regions": 1, "regions_values": [{"min": min1, "max":max1}]})
 		#print minimum
 		#print "Layer Thickness of Carbon layer. Min and max value for the first carbon layer and min and max also for the tungsten platform"
 		min1 = minimum[2] #int(raw_input("Enter the minimum of first region"))
 		max1 = 605 #nt(raw_input("Enter the maximum of first region"))
+		print "Min "+str(min1)
 		#min2 = int(raw_input("Enter the minimum of second region"))
 		#max2 = int(raw_input("Enter the maximum of second region"))
 		applyFit(app, fit, spec, { "particles": False, "thickness": True, "roughness": False, "layer": 1, "number_regions": 1, "regions_values": [{"min": min1, "max":max1}]})
@@ -111,12 +133,12 @@ def doFit(fit_file, spec_data):
 
 		Mo_estimator = MoEstimator(spectrum, 620, 780)
 		caca = target.SetElementAmount(1, 2, Mo_estimator)
-		print caca
-		print Mo_estimator
+		#print caca
+		#print "Mo_estimator: "+str(Mo_estimator)
 		#print "Layer Thickness of Molibdenium. Min and max value for left and right hand side of peak"
 		min = 650 #int(raw_input("Enter the minimum"))
 		max = 750 #int(raw_input("Enter the maximum"))
-		applyFit(app, fit, spec, { "particles": False, "thickness": True, "roughness": False, "layer": 2, "number_regions": 1, "regions_values": [{"min": min, "max": max}]})
+		#applyFit(app, fit, spec, { "particles": False, "thickness": True, "roughness": False, "layer": 2, "number_regions": 1, "regions_values": [{"min": min, "max": max}]})
 		'''
 		print "Layer Thickness and roughness of Carbon layer. Min and max value for the first carbon layer and min and max also for the tungsten platform, including the molibdenium right peak"
 		min1 = int(raw_input("Enter the minimum of first region"))
@@ -146,9 +168,10 @@ def main():
 	#print "First parameter is the file where the fit is defined"
 	#print "Second parameter is the spectra folder, or spectrum file depending on what you have commented into the code"
 	#fit_file = str(raw_input("Enter the fit file .xnra"))
-	fit_file = "C:\\Users\\mguitart\\Documents\\GitHub\\W7X_Tiles_DataAnalysis\\template.xnra"
+	fit_file = "C:\\Users\\mguitart\\Documents\\GitHub\\W7X_Tiles_DataAnalysis\\template1.xnra"
+	#fit_file = "\\\\AFS\\ipp\\home\\m\\mguitart\\HIWI\\fittings\\auto_test\\template.xnra"
 	#spec_data = str(raw_input("Enter the spectrum data .CAM"))
-	spec_data =  os.path.normpath('\\\\AFS\\ipp\\home\\m\\mguitart\\HIWI\\fittings\\auto_test\\')
+	spec_data =  os.path.normpath('\\\\AFS\\ipp\\home\\m\\mguitart\\HIWI\\fittings\\single_test\\')
 	doFit(fit_file, spec_data)
 
 

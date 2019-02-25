@@ -54,6 +54,7 @@ class FitFactory:
 		SimSpec = Dispatch("Simnra.Spectrum")
 		SimTar = Dispatch("Simnra.Target")
 		SimApp = Dispatch("Simnra.App")
+		SimCr = Dispatch("Simnra.CrossSec")
 		if (self.decision_coeff > 0.95) or (self.channel_dip > 570) or (self.channel_dip < 410) or (self.surface_Mo > 100) or ((self.channel_dip < 420) and (self.surface_Mo > 50)): # Y, it has been full sputtered
 
 			integratedExperimentalMoSpectrum = SimSpec.Integrate(1,self.minMo,self.maxMo)
@@ -77,7 +78,7 @@ class FitFactory:
 			SimApp.SaveAs(data_loc[0:-5]+'_fit_molay.xnra')
 			SimApp.OpenAs(data_loc[0:-5]+'_fit_molay.xnra', 2)
 			##--workaround
-
+			print "Mo_estimator: "+str(Mo_estimator)
 			SimTar.SetElementAmount(1, 2, Mo_estimator)
 			SimCr.SelectRutherford(42)
 
@@ -110,13 +111,13 @@ class FitFactory:
 			##--workaround
 
 			SimCr.SelectRutherford(42)
-			SimTar.SetLayerThickness(3,0.0)
+			SimTar.SetLayerThickness(3, 0.0)
 			#set fit parameters
 			lowC_cover = self.channel_dip
 
 			layerthickness = abs((lowC_cover - maxC)) * 530.0 - 5500.0
 
-			SimTar.SetLayerThickness(1,layerthickness)
+			SimTar.SetLayerThickness(1, layerthickness)
 			lowMo = 665
 			SimApp.CalculateSpectrum()
 
@@ -157,5 +158,5 @@ class FitFactory:
 			number_of_errors += 1
 			print "The fit of "+ file +" failed to converge. Fit Class " + self.fit_type
 
-		del SimSpec, SimTar, SimApp
+		del SimSpec, SimTar, SimApp, SimCr
 		return self.self.fit_type

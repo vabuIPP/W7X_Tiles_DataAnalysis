@@ -18,6 +18,8 @@ def getFiles(mypath):
 def isAuto(file):
     auto = file.replace(".CAM", "_auto.xnra")
     return not checkFile(auto)
+    # Descomenta si vols refer-ho tot
+    #return True
 
 def getGradients(arr):
     print arr

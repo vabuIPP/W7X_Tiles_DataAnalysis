@@ -11,9 +11,13 @@ def getFiles(mypath):
         current = join(mypath, f)
         if isdir(current) and "done" not in current:
             ret = ret + getFiles(current)
-        elif isfile(current) and ".CAM" in current:
+        elif isfile(current) and ".CAM" in current and isAuto(current):
             ret.append(os.path.normpath(current))
     return ret
+
+def isAuto(file):
+    auto = file.replace(".CAM", "_auto.xnra")
+    return not checkFile(auto)
 
 def getGradients(arr):
     print arr

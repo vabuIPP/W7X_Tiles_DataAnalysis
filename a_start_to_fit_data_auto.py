@@ -109,6 +109,7 @@ def doFit(template, spec_data):
 			ctemplate = buildTest(spec)
 		else:
 			ctemplate = template
+		print "Using: "+ctemplate
 		fit_file = camToXnra(spec, ctemplate)
 		# Load template
 		r = app.Open(fit_file, FileType = 2) # File format 2 is format .xnra
